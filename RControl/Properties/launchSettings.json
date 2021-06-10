@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RControl": {
+      "commandName": "Project",
+      "commandLineArgs": "-p COM3 00001000"
+    }
+  }
+}

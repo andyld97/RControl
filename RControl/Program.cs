@@ -25,6 +25,7 @@ namespace RControl
 
         private const char PARAM_HELP = 'h';
         private const char PARAM_CARD = 'c';
+        private const char PARAM_PORT = 'p';
         private const char PARAM_SWITCH = 's';
         private const char PARAM_BUTTON = 't';
         private const char PARAM_RELAY = 'r';
@@ -48,7 +49,7 @@ namespace RControl
             try
             {
                 // Init all cards at first
-                InitalizeCards(CheckParameters(args, PARAM_HELP) ? ReadParameter(args, PARAM_HELP) : SERIAL_PORT_NAME);
+                InitalizeCards(CheckParameters(args, PARAM_PORT) ? ReadParameter(args, PARAM_PORT) : SERIAL_PORT_NAME);
 
                 // Now check other params
                 if (args.Length == 0)
@@ -142,7 +143,7 @@ namespace RControl
                         Console.Write(finalResult);
                         return;
                     }
-                    else if (args.Length == 1)
+                    else
                     {
                         int relay = -1;
                         if (int.TryParse(args[0], out relay) && args[0].Length <= 3)
@@ -330,7 +331,7 @@ namespace RControl
         private static void PrintDocumentation()
         {
             string data =
-                "Documentation for RelayControl.exe v1.0.0.1" + Environment.NewLine +
+                "Documentation for RelayControl.exe v1.0.0.2" + Environment.NewLine +
                 "----------------------------------" + Environment.NewLine;
 
             Console.WriteLine(data);
@@ -343,7 +344,7 @@ namespace RControl
                 "-t -r 1...8",
                 "-t -c 1...255 -r 1...8",
                 string.Empty,
-                "Simple swichting",
+                "Simple swichting (must be always the first parameter)",
                 "AAAAAAAA",
                 "X,AAAAAAAA",
                 "0,AAAAAAAA",
