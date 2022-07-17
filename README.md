@@ -1,6 +1,7 @@
 # Welcome to RControl
 
 RControl is a little `.NET`-Console-App which (CLI) helps you to control your `relay-card` from `command-line` or even from other applications!
+Since this app is running on `.NET Core` it can be used on every platform, but you have to install `.NET` first! In the past I used it with `mono` to control my `relay-card` wit a linux server, but this isn't necessary anymore!
 
 # Based On 
 https://github.com/hb9fxq/RelayCard
@@ -9,6 +10,7 @@ https://github.com/hb9fxq/RelayCard
 - Also provide this as a library to simplify the integration for `.NET-Apps`
 
 # Example
+![Example screenshot](https://user-images.githubusercontent.com/10423894/179399063-281553ab-76f7-4472-ab51-2083b61ca7e3.png)
 
 # Documentation for RelayControl.exe v1.0.0.2
 ## Basic Commands
