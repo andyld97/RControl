@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RControl.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace RControl
         /// <summary>
         /// Name of the serial port, e.g. COM1, /dev/ttyUSB0
         /// </summary>
-        private const string SERIAL_PORT_NAME = "/dev/ttyUSB0";
+        private static string DEFAULT_SERIAL_PORT_NAME = "/dev/ttyUSB0";
 
         private const char PARAM_HELP = 'h';
         private const char PARAM_CARD = 'c';
@@ -38,6 +39,11 @@ namespace RControl
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
+            if (System.Environment.OSVersion.Platform == PlatformID.Unix)
+                DEFAULT_SERIAL_PORT_NAME = "/dev/ttyUSB0";
+            else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
+                DEFAULT_SERIAL_PORT_NAME = "COM1";
+
             // Parse arguments
             if (args.Length == 1 && CheckParameter(args[0], PARAM_HELP))
             {
@@ -49,7 +55,7 @@ namespace RControl
             try
             {
                 // Init all cards at first
-                InitalizeCards(CheckParameters(args, PARAM_PORT) ? ReadParameter(args, PARAM_PORT) : SERIAL_PORT_NAME);
+                InitalizeCards(CheckParameters(args, PARAM_PORT) ? ReadParameter(args, PARAM_PORT) : DEFAULT_SERIAL_PORT_NAME);
 
                 // Now check other params
                 if (args.Length == 0)
@@ -283,7 +289,7 @@ namespace RControl
                 Console.Write(ReadCard(adress));
         }
 
-        private static void InitalizeCards(string portName = SERIAL_PORT_NAME)
+        private static void InitalizeCards(string portName = DEFAULT_SERIAL_PORT_NAME)
         {
             relayCard = new Conrad8RelayCard(portName);
             numberOfCards = relayCard.InitializeCard();

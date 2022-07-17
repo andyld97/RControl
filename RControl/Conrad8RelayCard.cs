@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using RControl.Model;
 
 namespace RControl
 {
@@ -161,10 +158,7 @@ namespace RControl
         /// <value>
         /// The detected card count.
         /// </value>
-        public int DetectedCardCount
-        {
-            get { return this.detectedCardCount; }
-        }
+        public int DetectedCardCount => detectedCardCount;
 
         /// <summary>
         /// Initializes the card.
@@ -439,5 +433,5 @@ namespace RControl
 
             return result;
         }
-}
+    }
 }

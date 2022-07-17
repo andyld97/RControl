@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RControl
+﻿namespace RControl.Model
 {
     /// <summary>
     /// Holds all contents of a card response frame
@@ -45,7 +39,7 @@ namespace RControl
 
         public override string ToString()
         {
-            return string.Format("[ADR:{0} DAT:{2}, CRC:{3}]", this.AddressByte, this.ResponseCommand, this.DataByte, this.CrcByte);
+            return string.Format("[ADR:{0} DAT:{2}, CRC:{3}]", AddressByte, ResponseCommand, DataByte, CrcByte);
         }
 
     }

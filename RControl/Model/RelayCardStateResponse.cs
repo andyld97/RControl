@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RControl
+﻿namespace RControl.Model
 {
     public class RelayCardStateResponse
     {
@@ -13,7 +7,7 @@ namespace RControl
         /// </summary>
         public RelayCardStateResponse()
         {
-            this.CardResponseFrame = new Conrad8RelayCardResponseFrame();
+            CardResponseFrame = new Conrad8RelayCardResponseFrame();
         }
 
         /// <summary>

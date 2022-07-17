@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RControl
+namespace RControl.Model
 {
     public class CardRelayState
     {
@@ -16,8 +13,8 @@ namespace RControl
         /// <param name="cardAddress">The card address.</param>
         public CardRelayState(int numberOfPorts, int cardAddress)
         {
-            this.CardState = new bool[numberOfPorts];
-            this.CardAddress = cardAddress;
+            CardState = new bool[numberOfPorts];
+            CardAddress = cardAddress;
         }
 
         /// <summary>
@@ -36,14 +33,14 @@ namespace RControl
         public CardRelayState(int numberOfPorts, int cardAddress, int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8)
             : this(numberOfPorts, cardAddress)
         {
-            this.CardState[0] = Convert.ToBoolean(p1);
-            this.CardState[1] = Convert.ToBoolean(p2);
-            this.CardState[2] = Convert.ToBoolean(p3);
-            this.CardState[3] = Convert.ToBoolean(p4);
-            this.CardState[4] = Convert.ToBoolean(p5);
-            this.CardState[5] = Convert.ToBoolean(p6);
-            this.CardState[6] = Convert.ToBoolean(p7);
-            this.CardState[7] = Convert.ToBoolean(p8);
+            CardState[0] = Convert.ToBoolean(p1);
+            CardState[1] = Convert.ToBoolean(p2);
+            CardState[2] = Convert.ToBoolean(p3);
+            CardState[3] = Convert.ToBoolean(p4);
+            CardState[4] = Convert.ToBoolean(p5);
+            CardState[5] = Convert.ToBoolean(p6);
+            CardState[6] = Convert.ToBoolean(p7);
+            CardState[7] = Convert.ToBoolean(p8);
         }
 
         /// <summary>
@@ -73,14 +70,14 @@ namespace RControl
             var idx = 0;
             for (var i = 0; i < x.Length; i++)
             {
-                this.CardState[idx] = x[i];
+                CardState[idx] = x[i];
                 idx++;
             }
         }
 
         public void FromByte(bool[] state)
         {
-            this.CardState = (bool[])state.Clone();
+            CardState = (bool[])state.Clone();
         }
 
         /// <summary>
@@ -89,15 +86,15 @@ namespace RControl
         /// <returns>byte array representing the card state</returns>
         public byte[] ToByteArray()
         {
-            var res = new BitArray(this.CardState.ToArray());
-            var bytes = new byte[this.CardState.Length / 8];
+            var res = new BitArray(CardState.ToArray());
+            var bytes = new byte[CardState.Length / 8];
             res.CopyTo(bytes, 0);
             return bytes;
         }
 
         public override string ToString()
         {
-            return string.Format("[byte:{0}] mask:{1}", this.ToByteArray()[0].ToString(), Convert.ToString(this.ToByteArray()[0], 2));
+            return string.Format("[byte:{0}] mask:{1}", ToByteArray()[0].ToString(), Convert.ToString(ToByteArray()[0], 2));
         }
     }
 }
