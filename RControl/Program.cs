@@ -289,7 +289,7 @@ namespace RControl
                 Console.Write(ReadCard(adress));
         }
 
-        private static void InitalizeCards(string portName = DEFAULT_SERIAL_PORT_NAME)
+        private static void InitalizeCards(string portName)
         {
             relayCard = new Conrad8RelayCard(portName);
             numberOfCards = relayCard.InitializeCard();
