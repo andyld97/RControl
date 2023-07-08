@@ -33,4 +33,7 @@
     <PackageReference Include="System.Xml.ReaderWriter" Version="4.3.1" />
     <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RControlLib\RControlLib.csproj" />
+  </ItemGroup>
 </Project>

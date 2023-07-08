@@ -1,9 +1,9 @@
-﻿namespace RControl.Model
+﻿namespace RControlLib.Model
 {
     /// <summary>
     /// Holds all contents of a card response frame
     /// </summary>
-    public class Conrad8RelayCardResponseFrame
+    internal class Conrad8RelayCardResponseFrame
     {
         /// <summary>
         /// Gets or sets the response command.

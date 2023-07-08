@@ -1,11 +1,11 @@
-﻿using RControl.Model;
+﻿using RControlLib;
 using System;
 
 namespace RControl
 {
     public class Program
     {
-        private static Conrad8RelayCard relayCard = null;
+        private static RelayCard relayCard = null;
         private static int numberOfCards = 0;
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace RControl
                 if (args.Length == 0)
                 {
                     // Read card 1
-                    Console.Write(ReadCard(FIRST_CARD));
+                    Console.Write(relayCard.ReadState(FIRST_CARD));
                     return;
                 }
                 else
@@ -66,13 +66,13 @@ namespace RControl
                     {
                         bool cardIsSet = CheckParameters(args, PARAM_CARD);
                         string clearState = string.Empty;
-                        for (int i = 0; i < Conrad8RelayCard.ConstNumberOfCardPorts; i++)
+                        for (int i = 0; i < RelayCard.NumberOfCardPorts; i++)
                             clearState += "0";
 
                         if (cardIsSet && !string.IsNullOrEmpty(ReadParameter(args, PARAM_CARD)))
                         {
                             // ToDo: Validate integer
-                            SwitchRelayState(clearState, Convert.ToInt32(ReadParameter(args, PARAM_CARD)));
+                            Console.WriteLine(relayCard.SetState(clearState, Convert.ToInt32(ReadParameter(args, PARAM_CARD))));
                         }
                         else
                         {
@@ -83,7 +83,7 @@ namespace RControl
                             }
 
                             for (int c = 0; c < relayCard.DetectedCardCount; c++)
-                                SwitchRelayState(clearState, c + 1);
+                                relayCard.SetState(clearState, c + 1);
                         }
 
                         return;
@@ -104,27 +104,7 @@ namespace RControl
                                 int.TryParse(ReadParameter(args, PARAM_CARD), out card);
                             }
 
-                            string stateCurrent = ReadCard(card);
-                            string on = string.Empty;
-                            string off = string.Empty;
-
-                            for (int i = 0; i < stateCurrent.Length; i++)
-                            {
-                                if (7 - i == relay)
-                                {
-                                    on += "1";
-                                    off += "0";
-                                }
-                                else
-                                {
-                                    on += stateCurrent[i];
-                                    off += stateCurrent[i];
-                                }
-                            }
-
-                            // Tast
-                            SwitchRelayState(on, card, true);
-                            SwitchRelayState(off, card, false);                         
+                            Console.WriteLine(relayCard.SwitchButtonState(relay, card));                     
                         }
                         return;
                     }
@@ -137,7 +117,7 @@ namespace RControl
                         for (int c = 0; c < relayCard.DetectedCardCount; c++)
                         {
                             int a = c + 1;
-                            string stateCurrentOfAddress = ReadCard(a);
+                            string stateCurrentOfAddress = relayCard.ReadState(a);
 
                             finalResult += stateCurrentOfAddress;
                         }
@@ -151,7 +131,7 @@ namespace RControl
                         if (int.TryParse(args[0], out relay) && args[0].Length <= 3)
                         {
                             // Read relay
-                            Console.Write(ReadCard(relay));
+                            Console.Write(relayCard.ReadState(relay));
                             return;
                         }
                         else
@@ -168,7 +148,7 @@ namespace RControl
                                     int card = FIRST_CARD;
 
                                     if (int.TryParse(commandData[0], out card))
-                                        SwitchRelayState(switchData, card);
+                                        relayCard.SetState(switchData, card);
                                     else
                                         Console.Write("The first char must be a number!");
 
@@ -182,17 +162,17 @@ namespace RControl
                             }
                             else
                             {
-                                if (args[0].Length == Conrad8RelayCard.ConstNumberOfCardPorts)
+                                if (args[0].Length == RelayCard.NumberOfCardPorts)
                                 {
                                     // Command is addressed to the first card
-                                    SwitchRelayState(args[0], FIRST_CARD);
+                                    Console.WriteLine(relayCard.SetState(args[0], FIRST_CARD));
                                     return;
                                 }
                                 else
                                 {
-                                    if (args[0].Length % Conrad8RelayCard.ConstNumberOfCardPorts == 0)
+                                    if (args[0].Length % RelayCard.NumberOfCardPorts == 0)
                                     {
-                                        int cardsToAdress = args[0].Length / Conrad8RelayCard.ConstNumberOfCardPorts;
+                                        int cardsToAdress = args[0].Length / RelayCard.NumberOfCardPorts;
 
                                         if (cardsToAdress > relayCard.DetectedCardCount)
                                         {
@@ -209,9 +189,9 @@ namespace RControl
                                                 if (int.TryParse(args[0][r].ToString(), out state))
                                                 {
                                                     currentState += state;
-                                                    SwitchRelayState(currentState, currentCard, true);
+                                                    Console.WriteLine(relayCard.SetState(currentState, currentCard));
 
-                                                    if ((r + 1) % Conrad8RelayCard.ConstNumberOfCardPorts == 0)
+                                                    if ((r + 1) % RelayCard.NumberOfCardPorts == 0)
                                                     {
                                                         currentState = string.Empty;
                                                         currentCard++;
@@ -228,7 +208,7 @@ namespace RControl
                                             for (int c = 0; c < cardsToAdress; c++)
                                             {
                                                 int a = c + 1;
-                                                Console.Write(ReadCard(a));
+                                                Console.Write(relayCard.ReadState(a));
                                             }
                                             return;
                                         }
@@ -252,54 +232,10 @@ namespace RControl
             }
         }
 
-        private static void SwitchRelayState(string stateData, int adress, bool dontPrint = false)
-        {
-            bool[] rawData = new bool[Conrad8RelayCard.ConstNumberOfCardPorts];
-
-            // Length Validation
-            if (stateData.Length > Conrad8RelayCard.ConstNumberOfCardPorts)
-            {
-                // Cut off
-                stateData = stateData.Substring(0, Conrad8RelayCard.ConstNumberOfCardPorts);
-            }
-            else if (stateData.Length < Conrad8RelayCard.ConstNumberOfCardPorts)
-            {
-                // Add zeros
-                while (stateData.Length < Conrad8RelayCard.ConstNumberOfCardPorts)
-                    stateData += "0";
-            }
-
-            // Generating raw data for command to switch
-            for (int b = 0; b < rawData.Length; b++)
-                rawData[b] = (stateData[Conrad8RelayCard.ConstNumberOfCardPorts -1 - b] == '1');
-
-            // Put command together
-            var state = new CardRelayState(Conrad8RelayCard.ConstNumberOfCardPorts, adress);
-            state.FromByte(rawData);
-
-            // Send command to relay card
-            relayCard.SetPortCommand(state);
-
-            // Finally output the new current state of the relay card
-            if (!dontPrint)
-                Console.Write(ReadCard(adress));
-        }
-
         private static void InitalizeCards(string portName)
         {
-            relayCard = new Conrad8RelayCard(portName);
-            numberOfCards = relayCard.InitializeCard();
-        }
-
-        private static string ReadCard(int address)
-        {
-            var res = relayCard.GetPortCommand(address);
-            string result = string.Empty;
-
-            for (int i = res.RelayState.CardState.Length - 1; i >= 0; i--)
-                result += res.RelayState.CardState[i] ? "1" : "0";
-
-            return result;
+            relayCard = new RelayCard(portName);
+            numberOfCards = relayCard.DetectedCardCount ?? 0;
         }
 
         private static bool CheckParameter(string param, char excepted)
@@ -333,7 +269,7 @@ namespace RControl
         private static void PrintDocumentation()
         {
             string data =
-                "Documentation for RelayControl.exe v1.0.0.2" + Environment.NewLine +
+                "Documentation for RelayControl.exe v1.0.3" + Environment.NewLine +
                 "----------------------------------" + Environment.NewLine;
 
             Console.WriteLine(data);

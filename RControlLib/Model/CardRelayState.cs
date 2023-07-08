@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Linq;
 
-namespace RControl.Model
+namespace RControlLib.Model
 {
     public class CardRelayState
     {
