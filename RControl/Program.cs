@@ -170,7 +170,7 @@ namespace RControl
                                     if (int.TryParse(commandData[0], out card))
                                         SwitchRelayState(switchData, card);
                                     else
-                                        Console.Write("The first char muste be a number!");
+                                        Console.Write("The first char must be a number!");
 
                                     return;
                                 }
@@ -196,7 +196,7 @@ namespace RControl
 
                                         if (cardsToAdress > relayCard.DetectedCardCount)
                                         {
-                                            Console.WriteLine("Too many relays selected: {Need to adress:" + cardsToAdress + "}, {DetectedCards:" + relayCard.DetectedCardCount + "}");
+                                            Console.WriteLine("Too many relays selected: {Need to address:" + cardsToAdress + "}, {DetectedCards:" + relayCard.DetectedCardCount + "}");
                                             return;
                                         }
                                         else
@@ -219,7 +219,7 @@ namespace RControl
                                                 }
                                                 else
                                                 {
-                                                    Console.Write("Bitsequence containts illegal char!");
+                                                    Console.Write("Bitsequence contains illegal char!");
                                                     break;
                                                 }
                                             }
@@ -346,7 +346,7 @@ namespace RControl
                 "-t -r 1...8",
                 "-t -c 1...255 -r 1...8",
                 string.Empty,
-                "Simple swichting (must be always the first parameter)",
+                "Simple switching (must be always the first parameter)",
                 "AAAAAAAA",
                 "X,AAAAAAAA",
                 "0,AAAAAAAA",
@@ -370,7 +370,7 @@ namespace RControl
                 string.Empty,
                 "A bit sequence which will be sent to Card 1",
                 "A bit sequence which will be sent to Card X 1 <= X <= 255",
-                "Broadcast: This command will be sent and exceuted by each and every card",
+                "Broadcast: This command will be sent and executed by each and every card",
                 "A bit sequence which will be splitted and each byte send to card x. x = 1; increments",
                 string.Empty,
                 string.Empty,

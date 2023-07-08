@@ -1,27 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <OutputType>Exe</OutputType>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="ConsoleTables" Version="2.4.2" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.0-preview.6.22324.4" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.5.23280.8" />
     <PackageReference Include="Microsoft.Win32.Primitives" Version="4.3.0" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="System.AppContext" Version="4.3.0" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
-    <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0-preview.6.22324.4" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0-preview.5.23280.8" />
     <PackageReference Include="System.Console" Version="4.3.1" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.6.0-preview3.19128.7" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="7.0.0-preview.6.22324.4" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.0-preview.5.23280.8" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
-    <PackageReference Include="System.IO.Ports" Version="7.0.0-preview.6.22324.4" />
+    <PackageReference Include="System.IO.Ports" Version="8.0.0-preview.5.23280.8" />
     <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
     <PackageReference Include="System.Net.Primitives" Version="4.3.1" />
