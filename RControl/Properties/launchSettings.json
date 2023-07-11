@@ -2,7 +2,7 @@
   "profiles": {
     "RControl": {
       "commandName": "Project",
-      "commandLineArgs": "-p COM3 00001000"
+      "commandLineArgs": "-p COM5 -s 00001000"
     }
   }
 }

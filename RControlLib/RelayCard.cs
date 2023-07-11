@@ -2,6 +2,9 @@
 
 namespace RControlLib
 {
+    /// <summary>
+    /// Represents a RelayCard instance of the Conrad 8-Port relay-card
+    /// </summary>
     public class RelayCard
     {
         /// <summary>
@@ -12,6 +15,9 @@ namespace RControlLib
         private readonly Conrad8RelayCard card;
         private int cardCount = 1;
 
+        /// <summary>
+        /// How many cards were found during initialization
+        /// </summary>
         public int? DetectedCardCount
         {
             get
@@ -23,12 +29,22 @@ namespace RControlLib
             }
         }
 
+        /// <summary>
+        /// Initializes the card using the given serial port
+        /// </summary>
+        /// <param name="port">The COM-port (e.g. COM 1)</param>
         public RelayCard(string port)
         {
             card = new Conrad8RelayCard(port);
             Initalize();
         }
 
+        /// <summary>
+        /// Initializes the card using port, baudRate and dataBits
+        /// </summary>
+        /// <param name="port">The COM-port (e.g. COM 1)</param>
+        /// <param name="baudRate">The rate at which information is transferred in a communication channel.</param>
+        /// <param name="dataBits">Bits per byte (normally 8)</param>
         public RelayCard(string port, ushort baudRate, ushort dataBits)
         {
             card = new Conrad8RelayCard(port, baudRate, dataBits);
@@ -40,6 +56,17 @@ namespace RControlLib
             cardCount = card.InitializeCard();
         }
 
+        /// <summary>
+        /// Works like a taster, switches the relay on and off again
+        /// </summary>
+        /// <param name="relay">The relay index (0..7)</param>
+        /// <param name="address">
+        /// 0: Broadcast (all cards) <br />
+        /// 1: First Card <br />
+        /// 2: Second card ... <br />
+        /// 255: Last card
+        /// </param>
+        /// <returns>The actual state of the relay card after switching</returns>
         public string SwitchButtonState(int relay, int address = 1)
         {
             string stateCurrent = ReadState(address);
@@ -65,6 +92,17 @@ namespace RControlLib
             return SetState(off, address);
         }
 
+        /// <summary>
+        /// Switches to the given state
+        /// </summary>
+        /// <param name="state">The state to switch to e.g. 01010101</param>
+        /// <param name="address">
+        /// 0: Broadcast (all cards) <br />
+        /// 1: First Card <br />
+        /// 2: Second card ... <br />
+        /// 255: Last card
+        /// </param>
+        /// <returns>The actual state of the relay card after switching</returns>
         public string SetState(string state, int address = 1)
         {
             bool[] rawData = new bool[NumberOfCardPorts];
@@ -97,6 +135,16 @@ namespace RControlLib
             return ReadState(address);
         }
 
+        /// <summary>
+        /// Reads the state of the given card
+        /// </summary>
+        /// <param name="address">
+        /// 0: Broadcast (all cards) <br />
+        /// 1: First Card <br />
+        /// 2: Second card ... <br />
+        /// 255: Last card
+        /// </param>
+        /// <returns>The actual state of the relay card</returns>
         public string ReadState(int address = 1)
         {
             var res = card.GetPortCommand(address, NumberOfCardPorts);
@@ -108,6 +156,11 @@ namespace RControlLib
             return result;
         }
 
+        /// <summary>
+        /// Reads the states of the given cards
+        /// </summary>
+        /// <param name="cards">Which cards (indices) should be read</param>
+        /// <returns>The actual state of the relay cards</returns>
         public string[] ReadStates(int[] cards)
         {
             string[] state = new string[cards.Length];
