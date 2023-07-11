@@ -6,13 +6,15 @@ Since this app is running on `.NET Core` it can be used on every platform, but y
 # Based On 
 https://github.com/hb9fxq/RelayCard
 
-# ToDo
-- Also provide this as a library to simplify the integration for `.NET-Apps`
+# Nuget
+As of 07/11/2023 `RControlLib` is available as a nuget package [here](https://www.nuget.org/packages/RControlLib) and can be used in other `.NET Projects`.   
+Since this is implemented in `.NET Standard 2.0` it is compatible also with `.NET Framework 4.8 or higher`!
+  
 
 # Example
 ![Example screenshot](https://user-images.githubusercontent.com/10423894/179399063-281553ab-76f7-4472-ab51-2083b61ca7e3.png)
 
-# Documentation for RelayControl.exe v1.0.0.2
+# Documentation for RelayControl.exe v1.0.3
 ## Basic Commands
 | Command                | Description                                                            |
 |------------------------|------------------------------------------------------------------------|
