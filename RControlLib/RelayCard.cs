@@ -93,6 +93,34 @@ namespace RControlLib
         }
 
         /// <summary>
+        /// Switches a single relay on or off
+        /// </summary>
+        /// <param name="relay">The relay index (0..7)</param>
+        /// <param name="bit">ON or OFF (TRUE or FALSE)</param>
+        /// <param name="address">
+        /// 0: Broadcast (all cards) <br />
+        /// 1: First Card <br />
+        /// 2: Second card ... <br />
+        /// 255: Last card
+        /// </param>
+        /// <returns>The actual state of the relay card after switching</returns>
+        public string Switch(int relay, bool bit, int address = 1)
+        {
+            string state = ReadState(address);
+            string newState = string.Empty;
+
+            for (int i = 0; i < state.Length; i++)
+            {
+                if (7 - i == relay)
+                    newState += bit ? "1" : "0";
+                else
+                    newState += state[i];
+            }
+
+            return SetState(newState, address);
+        }
+
+        /// <summary>
         /// Switches to the given state
         /// </summary>
         /// <param name="state">The state to switch to e.g. 01010101</param>
